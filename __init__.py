@@ -16,9 +16,12 @@ class BrainyQuoteSkill( MycroftSkill ):
     @intent_handler(IntentBuilder("").optionally("Tell").require("BrainyQuote"))
     def handle_tell_quote_intent(self, message):
         author, quote = self.brainyquote.getQuote( )
-        self.speak_dialog("author.quote",
-                          data={"author": author,
-                                "quote": quote})
+        if author and quote:
+            self.speak_dialog( "author.quote",
+                               data={"author": author,
+                                     "quote": quote})
+        else:
+            self.speak_dialog( "no.quote" )
         return
     
 def create_skill():
